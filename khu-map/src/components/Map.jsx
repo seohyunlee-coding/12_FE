@@ -3,7 +3,6 @@ import placeHolder from '../assets/placeholder.jpg';
 import { useZoom, useDragScroll } from '../hooks/Map';
 
 export default function Map() {
-    const divRef = useRef(null);
     const containerRef = useRef(null);
     const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
     const [baseScale, setBaseScale] = useState(400);
@@ -18,10 +17,13 @@ export default function Map() {
                 height: img.height
             });
         };
+    }, []);
+
+    window.onload = () => {
         window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
             setBaseScale(100 * imageSize.width / window.innerWidth) :
             setBaseScale(100 * imageSize.height / window.innerHeight);
-    }, []);
+    };
 
     window.onresize = () => {
         window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
