@@ -1,39 +1,60 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import placeHolder from '../assets/placeholder.jpg';
 import { useZoom, useDragScroll } from '../hooks/Map';
 
 export default function Map() {
     const divRef = useRef(null);
     const containerRef = useRef(null);
+    const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+    const [baseScale, setBaseScale] = useState(400);
 
-    const [scale] = useZoom(divRef, 100, 100);
+    // 이미지 로드 시 실제 크기 가져오기
+    useEffect(() => {
+        const img = new Image();
+        img.src = placeHolder;
+        img.onload = () => {
+            setImageSize({
+                width: img.width,
+                height: img.height
+            });
+        };
+        window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
+            setBaseScale(100 * imageSize.width / window.innerWidth) :
+            setBaseScale(100 * imageSize.height / window.innerHeight);
+    }, []);
+
+    window.onresize = () => {
+        window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
+            setBaseScale(100 * imageSize.width / window.innerWidth) :
+            setBaseScale(100 * imageSize.height / window.innerHeight);
+    };
+
+    const [scale] = useZoom(containerRef, 100, 100);
     const { isDragging, startDrag } = useDragScroll(containerRef);
 
     return (
         <div
             ref={containerRef}
             style={{
-                overflow: "scroll",
+                overflow: "hidden",
                 width: "100vw",
                 height: "100vh",
-                cursor: isDragging.current ? "grabbing" : "grab"
+                cursor: isDragging.current ? "grabbing" : "grab",
+                position: "relative"
             }}
+            onMouseDown={startDrag}
         >
-            <div
-                ref={divRef}
-                style={
-                    {
-                        backgroundImage: `url(${placeHolder})`,
-                        width: scale + '%',
-                        height: scale + '%',
-                        overflow: "hidden",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% auto",
-                    }
-                }
-                onMouseDown={startDrag}
-            >
-            </div>
+            <img
+                src={placeHolder}
+                alt="Map"
+                style={{
+                    width: imageSize.width * scale / baseScale + "px",
+                    height: imageSize.height * scale / baseScale + "px",
+                    objectFit: "cover",
+                    userSelect: "none"
+                }}
+                draggable={false}
+            />
         </div>
     )
 }
