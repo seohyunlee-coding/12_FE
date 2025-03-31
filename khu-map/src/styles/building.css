@@ -1,0 +1,11 @@
+.building
+{
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.1s ease-in-out;
+}
+
+.building:hover
+{
+    transform: translateY(-10%);
+}
