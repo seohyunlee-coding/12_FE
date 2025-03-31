@@ -1,11 +1,12 @@
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import placeHolder from '../assets/placeholder.jpg';
 import { useZoom, useDragScroll } from '../hooks/Map';
 
-export default function Map() {
+export default function Map({ children }) {
     const containerRef = useRef(null);
     const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
     const [baseScale, setBaseScale] = useState(400);
+    const [isSelected, setIsSelected] = useState(false);
 
     // 이미지 로드 시 실제 크기 가져오기
     useEffect(() => {
@@ -19,19 +20,21 @@ export default function Map() {
         };
     }, []);
 
-    window.onload = () => {
-        window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
-            setBaseScale(100 * imageSize.width / window.innerWidth) :
-            setBaseScale(100 * imageSize.height / window.innerHeight);
-    };
+    useEffect(() => {
+        const handleResize = () => {
+            if (imageSize.width && imageSize.height) {
+                window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
+                    setBaseScale(100 * imageSize.width / window.innerWidth) :
+                    setBaseScale(100 * imageSize.height / window.innerHeight);
+            }
+        };
 
-    window.onresize = () => {
-        window.innerWidth / window.innerHeight > imageSize.width / imageSize.height ?
-            setBaseScale(100 * imageSize.width / window.innerWidth) :
-            setBaseScale(100 * imageSize.height / window.innerHeight);
-    };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [imageSize]);
 
-    const [scale] = useZoom(containerRef, 100, 100);
+    const { scale } = useZoom(containerRef, 100, 100);
     const { isDragging, startDrag } = useDragScroll(containerRef);
 
     return (
@@ -41,22 +44,33 @@ export default function Map() {
                 overflow: "hidden",
                 width: "100vw",
                 height: "100vh",
-                cursor: isDragging.current ? "grabbing" : "grab",
-                position: "relative"
+                cursor: isDragging ? "grabbing" : "grab",
+                position: "relative",
             }}
             onMouseDown={startDrag}
         >
-            <img
-                src={placeHolder}
-                alt="Map"
+            <div
                 style={{
-                    width: imageSize.width * scale / baseScale + "px",
-                    height: imageSize.height * scale / baseScale + "px",
-                    objectFit: "cover",
-                    userSelect: "none"
+                    width: "100%",
+                    height: "100%",
+                    position: "relative",
+                    transformOrigin: "0 0",
                 }}
-                draggable={false}
-            />
+            >
+                <img
+                    src={placeHolder}
+                    alt="Map"
+                    style={{
+                        width: imageSize.width * scale / baseScale + "px",
+                        height: imageSize.height * scale / baseScale + "px",
+                        transformOrigin: "0 0",
+                        objectFit: "contain",
+                        userSelect: "none",
+                    }}
+                    draggable={false}
+                />
+                {React.cloneElement(children, { postScale: scale / baseScale })}
+            </div>
         </div>
-    )
+    );
 }
