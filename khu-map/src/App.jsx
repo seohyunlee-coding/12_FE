@@ -38,7 +38,7 @@ function App() {
 
 
   return (
-    <div style={{ postion: "relative", backgroundColor: "transparent", pointerEvents: "all" }}>
+    <div style={{ position: "relative", backgroundColor: "transparent", pointerEvents: "all" }}>
       <Map>
         <Building src={placeholder_small} x={1000} y={400}></Building>
       </Map>

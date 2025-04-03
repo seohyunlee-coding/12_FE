@@ -43,7 +43,6 @@ export default function Building(props) {
                 style={{ width: "100%", height: "100%" }}
                 src={props.src}
                 className="building"
-                onClick={props.onClick()}
                 onMouseDown={(e) => { e.stopPropagation() }}
                 draggable={false}
             />
