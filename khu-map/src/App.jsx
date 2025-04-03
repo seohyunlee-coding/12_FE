@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './styles/App.css'
-
+import Map from './components/Map.jsx'
 // 검색 아이콘 불러오기
 import searchIcon from "./assets/search_icon.svg"
 
@@ -9,10 +9,8 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar';
 
 // router 라이브러리 react-router-dom
 import { Link } from 'react-router-dom';
-
-
-
-
+import Building from './components/building.jsx';
+import placeholder_small from './assets/placeholder_small.jpg';
 
 function App() {
   // 검색창 - usestate 설정
@@ -26,7 +24,7 @@ function App() {
     setInputValue(event.target.value);
   }
 
-   // 검색창 - form 태그 입력시 자동 새로고침 방지
+  // 검색창 - form 태그 입력시 자동 새로고침 방지
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(`${inputValue}`);
@@ -35,39 +33,44 @@ function App() {
   // 길찾기 패널 - 표시 여부
   const handleDirectionClick = () => {
     setShowDirections(!showDirections);
-  } 
+  }
 
 
   return (
-    <>
-      <div style={{ display: 'flex' }}> 
-      {/* 사이드바 */}
-      <Sidebar
-        backgroundColor='#ffffff'
-        width = '150px'
-        collapsedWidth='50'
-        rootStyles={{
-          color: '#3d3d3d',
-          height: '100vh',
-          opacity: '0.9'
-        }}
-      >
-        <Menu 
-          menuItemStyles={{
-            button: {
-              [`&.active`]: {
-                backgroundColor: '#13395e',
-                color: '#b6c8d9',
-              },
-            },
+    <div style={{ postion: "relative", backgroundColor: "transparent", pointerEvents: "all" }}>
+      <Map>
+        <Building src={placeholder_small} x={1000} y={400}></Building>
+      </Map>
+
+      <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0' }}>
+        {/* 사이드바 */}
+        <Sidebar
+          backgroundColor='#ffffff'
+          width='150px'
+          collapsedWidth='50'
+          rootStyles={{
+            position: 'absolute',
+            color: '#3d3d3d',
+            height: '100vh',
+            opacity: '0.9'
           }}
         >
+          <Menu
+            menuItemStyles={{
+              button: {
+                [`&.active`]: {
+                  backgroundColor: '#13395e',
+                  color: '#b6c8d9',
+                },
+              },
+            }}
+          >
 
-          <MenuItem> 길찾기 </MenuItem>
-          <SubMenu label="주변시설">
-          <MenuItem> 편의시설 </MenuItem>
-          <MenuItem> 제휴시설 </MenuItem>
-          </SubMenu>
+            <MenuItem> 길찾기 </MenuItem>
+            <SubMenu label="주변시설">
+              <MenuItem> 편의시설 </MenuItem>
+              <MenuItem> 제휴시설 </MenuItem>
+            </SubMenu>
 
             {/* 추후 라우터 설정 해주기 */}
             <MenuItem> 식당 </MenuItem>
@@ -76,31 +79,30 @@ function App() {
             <MenuItem> 행사/이벤트 </MenuItem>
             <MenuItem> 커뮤니티 </MenuItem>
           </Menu>
-      </Sidebar>
-      
+        </Sidebar>
 
-      <div><h1>지도 검색창</h1></div>
+        <div style={{ display: 'flex', flexDirection: 'row', position: "absolute", width: "100vw", left: "150px", }}>
+          <div style={{ height: "min-content" }}><h1>지도 검색창</h1></div>
 
-      {/*검색창*/}
-      <div className='search-form'>
-          <form onSubmit={handleSubmit} className='search-container'>
-            <input 
-              className="search-input"
-              type="text" 
-              value={inputValue} 
-              onChange={handleChange} 
-              placeholder={"검색하고 싶은 건물을 입력하세요"}/>
+          {/*검색창*/}
+          <div className='search-form'>
+            <form onSubmit={handleSubmit} className='search-container'>
+              <input
+                className="search-input"
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                placeholder={"검색하고 싶은 건물을 입력하세요"} />
 
-            <button type="submit" className = "search-button">
-              <img src={searchIcon} alt="검색이미지" className="search-icon"/>
-            </button>
-          </form>
+              <button type="submit" className="search-button">
+                <img src={searchIcon} alt="검색이미지" className="search-icon" />
+              </button>
+            </form>
+          </div>
+        </div>
+
       </div>
-
-      
-
-      </div>
-    </>
+    </div >
   )
 }
 
