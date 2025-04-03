@@ -38,12 +38,12 @@ function App() {
 
 
   return (
-    <div style={{ position: "relative", backgroundColor: "transparent", pointerEvents: "all" }}>
+    <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
       <Map>
         <Building src={placeholder_small} x={1000} y={400}></Building>
       </Map>
 
-      <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0' }}>
+      <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0', userSelect: 'none' }}>
         {/* 사이드바 */}
         <Sidebar
           backgroundColor='#ffffff'
