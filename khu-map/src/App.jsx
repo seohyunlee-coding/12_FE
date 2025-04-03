@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
 import './styles/App.css'
 import Map from './components/Map.jsx'
 // 검색 아이콘 불러오기

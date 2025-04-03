@@ -7,7 +7,7 @@ export default function Building(props) {
     const [size, setSize] = useState({ width: 0, height: 0 });
     const [isPopupShown, setisPopupShown] = useState(false);
 
-    // props: { x: number, y: number, src: string, postScale: number, buildingID: number }
+    // props: { x: number, y: number, src: string, postScale: number, onClick: function }
 
     useEffect(
         () => {
@@ -24,7 +24,7 @@ export default function Building(props) {
 
     // TODO: 백엔드의 건물 데이터베이스 확인하고 API응답 조율하기
     // const fetchBuildingInfo = async (buildingID) => {
-    //     const response = await fetch(`http://localhost:8080/building/${buildingID}`);
+    //     const response = await fetch(`http://localhost:8080/building/?id=${buildingID}`);
     //     const data = await response.json();
     //     return data;
     // }
@@ -43,7 +43,9 @@ export default function Building(props) {
                 style={{ width: "100%", height: "100%" }}
                 src={props.src}
                 className="building"
-                onClick={() => { console.log("clicked") }}
+                onClick={props.onClick()}
+                onMouseDown={(e) => { e.stopPropagation() }}
+                draggable={false}
             />
             <BuildingDetail />
         </div>
