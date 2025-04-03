@@ -5,7 +5,7 @@ import BuildingDetail from "./BuildingDetail";
 export default function Building(props) {
 
     const [size, setSize] = useState({ width: 0, height: 0 });
-    const [isPopupShown, setisPopupShown] = useState(false);
+    // const [isPopupShown, setisPopupShown] = useState(false);
 
     // props: { x: number, y: number, src: string, postScale: number, onClick: function }
 
@@ -45,8 +45,13 @@ export default function Building(props) {
                 className="building"
                 onMouseDown={(e) => { e.stopPropagation() }}
                 draggable={false}
+                onClick={() => {
+                    props.onClick();
+                }}
             />
-            <BuildingDetail />
+            <div style={{ display: props.isSelected ? "block" : "none" }}>
+                <BuildingDetail />
+            </div>
         </div>
     )
 }
