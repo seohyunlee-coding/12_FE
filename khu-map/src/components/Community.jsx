@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "../styles/Community.css";
 import search_icon from "../assets/community_search.png";
+import heart_icon from "../assets/heart.png";
+import down_icon from "../assets/download.png";
+import arrown_icon from "../assets/arrow-left.png";
+import map_icon from "../assets/map-icon.png";
 
 const images = [
   { id: 1, building: "노천극장", url: "https://picsum.photos/300/400" },
@@ -128,7 +132,7 @@ export default function Community() {
                 setSelectedImage(null);
               }}
             >
-              X
+                <img src={arrown_icon} alt="close" style={{width: "24px", height:"24px"}}/>
             </button>
             <img src={selectedImage.url} alt="img" className="selected-image" />
           </div>
@@ -139,26 +143,27 @@ export default function Community() {
         className="community_divider"
         style={{ width: "0.03%", height: "95%", backgroundColor: "#8F7C7C66" }}
       ></div>
+        {/* 댓글 칸 */}
       <div className="community_secondrow">
         {IsImageSelected && ( // IsImageSelected가 true일 때만 렌더링
           <div className="selected-image-comment">
             <div className="selected-image-comment-header">
-              <p>사진 댓글</p>
-              <button>하트</button>
-              <button>다운</button>
+              <p style={{marginLeft: '5%',marginTop: '4%', fontSize: "20px"}} >사진 댓글</p>
+              <button style={{marginLeft: '50%', border: "none", background: "none"}}><img src={heart_icon} alt="heart" style={{width: "24px", height:"24px",cursor: "pointer"}}/></button>
+              <button style={{border: "none", background: "none"}}><img src={down_icon} alt="down" style={{width: "24px", height:"24px",cursor: "pointer"}}/></button>
             </div>
             <div className="selected-image-comment-body">
               <p>댓글 내용</p>
             </div>
             <div className="selected-image-comment-input">
                 <input type="text" placeholder="댓글 추가" />
-                <button>등록</button>
+                {/* <button>등록</button> */}
             </div>
           </div>
         )}
         {!IsImageSelected && ( // IsImageSelected가 true일 때만 렌더링
           <div>
-            <h2 style={{marginLeft: '5%',marginTop: '2%' }}>나의 활동</h2>
+            <div style={{display:"flex"}}><p style={{marginLeft: '5%',marginTop: '4%', fontSize: "20px"}}>나의 활동</p><button style={{border:"none", background:"none", marginLeft:"63%", cursor:"pointer"}}><img src={map_icon} alt="map_icon" style={{ width:"22px", height:"22px"}}/></button></div>
             <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>내가 올린 사진</p>
             <p  style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>댓글 단 사진</p>
             <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>좋아요 한 사진</p>

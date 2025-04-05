@@ -84,6 +84,7 @@
   border-radius: 1em;
   overflow: hidden;
   margin-bottom: 10%;
+  cursor: pointer;
 }
 
 .grid-item img {
@@ -103,45 +104,63 @@
 }
 
 .selected-image {
-    object-fit: contain; /* 이미지 비율 유지 */
-    max-width: 70%;
-    max-height: 90%;
-    margin: auto;
-    border-radius: 1em;
+  object-fit: contain; /* 이미지 비율 유지 */
+  max-width: 70%;
+  max-height: 90%;
+  margin: auto;
+  border-radius: 1em;
 }
 
 .close-button {
+  border: none;
+  width: 30px; /* 버튼 크기 */
+  height: 30px; /* 버튼 크기 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+}
 
-    border: none;
-    width: 30px; /* 버튼 크기 */
-    height: 30px; /* 버튼 크기 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+.selected-image-comment {
+  height: 100%;
+  width: 100%;
+}
 
-  .selected-image-comment {
-    height: 100%;
-    width: 100%;
-  }
+.selected-image-comment-header {
+  display: flex;
+  height: 10%;
+  width: 100%;
+}
 
-  .selected-image-comment-header {
-    display: flex;
-    height: 10%;
-    width: 100%;
-  }
+.selected-image-comment-body {
+  height: 80%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 
-  .selected-image-comment-body {
-    height: 80%;
-    width: 100%;
-  }
+.selected-image-comment-input {
+  display: flex;
+  height: 10%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 
-  .selected-image-comment-input {
-    display: flex;
-    height: 10%;
-    width: 100%;
-  }
+.selected-image-comment-input input {
+  background-color: #e9e5e5;
+  width: 80%;
+  border: none;
+  border-radius: 1em;
+  height: 60%;
+  padding: 0 5%;
+  margin-bottom: 10%;
+  outline: none;
+}
 
-
-
+.selected-image-comment-input input::placeholder {
+  color: #8f7c7c; /* 원하는 색상으로 변경 (예: 연한 회색) */
+}
