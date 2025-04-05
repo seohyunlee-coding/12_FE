@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react"
 import "../styles/building.css";
 import BuildingDetail from "./BuildingDetail";
+import RoadDetail from "./RoadDetail";
 
-export default function Building(props) {
+export default function Building({ x, y, src, buildingID, buildingName, movetoPos, setIndex, resetIndex, isSelected, isBuilding = true, status = 0 }) {
 
     const [size, setSize] = useState({ width: 0, height: 0 });
     // const [isPopupShown, setisPopupShown] = useState(false);
 
-    // props: { x: number, y: number, src: string, postScale: number, onClick: function }
+    // props: { x: number, y: number, src: string, buildingID: number, buildingName: string, postScale: number, onClick: function }
 
     useEffect(
         () => {
             const img = new Image();
-            img.src = props.src;
+            img.src = src;
             img.onload = () => {
                 setSize({
                     width: img.width,
@@ -31,27 +32,39 @@ export default function Building(props) {
 
     const style = {
         position: "absolute",
-        width: size.width * props.postScale + "px",
-        height: size.height * props.postScale + "px",
-        left: props.x * props.postScale + "px",
-        top: props.y * props.postScale + "px",
+        display: "flex",
+        gap: "4px",
+        flexDirection: "column",
+        alignItems: "center",
+        width: size.width + "px",
+        height: size.height + "px",
+        left: x + "px",
+        top: y + "px",
     }
 
     return (
         <div style={style}>
+            <div style={
+                {
+                    position: "absolute",
+                    bottom: size.height + 20 + "px",
+                    display: isSelected ? "block" : "none",
+                    opacity: isSelected ? 1 : 0,
+                    transition: "opacity 0.3s",
+                }
+            }>
+                {isBuilding ? <BuildingDetail buildingName={buildingName} /> : <RoadDetail status={status} />}
+            </div>
             <img
                 style={{ width: "100%", height: "100%" }}
-                src={props.src}
+                src={src}
                 className="building"
                 onMouseDown={(e) => { e.stopPropagation() }}
                 draggable={false}
-                onClick={() => {
-                    props.onClick();
-                }}
+                onMouseEnter={() => { setIndex() }}
+                onMouseLeave={() => { resetIndex() }}
+                onClick={() => { movetoPos(x + size.width, y + size.height, true) }}
             />
-            <div style={{ display: props.isSelected ? "block" : "none" }}>
-                <BuildingDetail />
-            </div>
         </div>
     )
 }

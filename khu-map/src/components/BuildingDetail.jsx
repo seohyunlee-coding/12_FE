@@ -1,17 +1,9 @@
-import "../styles/BuildingDetail.css";
+import "../styles/Building.css";
 
-export default function BuildingDetail() {
+export default function BuildingDetail({ buildingName = "공학관" }) {
     return (
         <div className="building-detail">
-            {/* <img src="" alt="" /> */}
-            <div className="info-wrap">
-                <p>건물 이름: </p>
-                <div className="button-wrap">
-                    <button>출발</button>
-                    <button>도착</button>
-                </div>
-                <p>건물 설명: </p>
-            </div>
+            <div className="building-name">{buildingName}</div>
         </div>
     )
 }
