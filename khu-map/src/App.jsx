@@ -49,11 +49,23 @@ function App() {
   }, []);
    
 
+  const markers = [
+    { id: 1, name: "자대", x: 1000, y: 400 },
+    { id: 2, name: "예대", x: 2000, y: 400 },
+  ];
 
   return (
     <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
-     <Map>
-        <Building src={placeholder_small} x={1000} y={400}></Building>
+      <Map>
+        {markers.map((marker) => (
+        <Building
+          src = {placeholder_small}
+          x={marker.x}
+          y={marker.y}
+          name={marker.name}
+        >
+        </Building>
+        ))}
       </Map>
 
       <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0'}}>
