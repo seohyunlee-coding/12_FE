@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import './styles/App.css'
 import Map from './components/Map.jsx'
+import Tips from './components/Tips.jsx'
+import TipsLayout from './components/TipsLayout.jsx'
 // 검색 아이콘 불러오기
 import searchIcon from "./assets/search_icon.svg"
 
@@ -12,6 +14,9 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import Building from './components/building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
+
+import { fetchBuildingList, fetchTips, fetchRoadList } from './hooks/Map/fetchFunctions.js'
+import TipCarousel from './components/TipCarousel.jsx'
 
 function App() {
   // 검색창 - usestate 설정
@@ -41,8 +46,13 @@ function App() {
     <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
       <Map>
         <Building src={placeholder_small} x={1000} y={400}></Building>
+        <Building src={placeholder_small} x={2000} y={700} isBuilding={false} status={0}></Building>
       </Map>
 
+      <TipsLayout>
+        <TipCarousel tipObjects={tipArr}></TipCarousel>
+        <Tips />
+      </TipsLayout>
       <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0', userSelect: 'none' }}>
         {/* 사이드바 */}
         <Sidebar
