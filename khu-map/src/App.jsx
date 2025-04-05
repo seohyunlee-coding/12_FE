@@ -13,6 +13,7 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'; // 사이�
 import { Link } from 'react-router-dom'; // router 라이브러리 react-router-dom
 import Building from './components/building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
+import Community from './components/Community.jsx';
 
 function App() {
   const [inputValue, setInputValue] = useState(' ');  // 검색창 - usestate 설정
