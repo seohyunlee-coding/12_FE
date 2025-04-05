@@ -34,6 +34,9 @@ function App() {
   const [tipArr, setTipArr] = useState([]);
 
   const [selectedBuildingIdx, setSelectedBuildingIdx] = useState(null); // 선택된 건물 인덱스
+  const [isChallengeOpen, setIsChallengeOpen] = useState(false); // 도전과제 패널 열기
+  const [isCommunityOpen, setIsCommunityOpen] = useState(false); // 커뮤니티 패널 열기
+  const [isBadgeOpen, setIsBadgeOpen] = useState(false); // 배지 패널 열기
 
   const getInitData = useCallback(async () => {
     fetchBuildingList().then(data => setBuildingArr(data)).catch((error) => {
@@ -209,7 +212,7 @@ function App() {
         );
       // case 'community':
       //   return (
-         
+
       //   );
       // case 'challenge':
       //   return (
@@ -231,9 +234,9 @@ function App() {
 
   return (
     <div style={{ position: "absolute", backgroundColor: "transparent", width: "100vw", pointerEvents: "all" }}>
-      {isbadgeopen && (<PlaceBadge/>)}
-      {ischallengeopen && (<ChallengeBoard/>)}
-      {iscommunityopen && (<Community/>)}
+      {isBadgeOpen && (<PlaceBadge />)}
+      {isChallengeOpen && (<ChallengeBoard />)}
+      {isCommunityOpen && (<Community />)}
       <Map>
         {buildingArr.map((building, idx) => (
           <Building
@@ -285,18 +288,18 @@ function App() {
               <img src={map} style={{ width: "24px", height: "24px", marginTop: "28px", marginLeft: "21px", marginBottom: "5px" }} />
             </div>
 
-            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('direction'); setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 길찾기 </MenuItem>
-            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('around'); setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(false)}}> 주변시설 </MenuItem>
-            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('partner'); setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(false)}}> 제휴시설 </MenuItem>
-            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('tour') ;setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(false)}}>캠퍼스투어</MenuItem>
-            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('event') ;setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(false)}}> 행사 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('direction'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 길찾기 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('around'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 주변시설 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('partner'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 제휴시설 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('tour'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}>캠퍼스투어</MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('event'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 행사 </MenuItem>
             <hr style={{ width: "92px", backgroundColor: "#8f7c7c", marginRight: "35px", opacity: '0.4' }}></hr>
             <img src={talk} style={{ width: "22px", height: "22px", marginTop: "17px", marginLeft: "21px", marginBottom: "5px" }} />
-            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(false) ;setIsCommunityOpen(true); setIsBadgeOpen(false) }}> 커뮤니티 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(false); setIsCommunityOpen(true); setIsBadgeOpen(false) }}> 커뮤니티 </MenuItem>
             <hr style={{ width: "92px", backgroundColor: "#8f7c7c", marginRight: "35px", opacity: '0.4' }}></hr>
             <img src={award} style={{ width: "26px", height: "26px", marginTop: "17px", marginLeft: "17px", marginBottom: "5px" }} />
-            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(true) ;setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 도전과제 </MenuItem>
-            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(false) ;setIsCommunityOpen(false); setIsBadgeOpen(true) }}> 장소 배지 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(true); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 도전과제 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(true) }}> 장소 배지 </MenuItem>
           </Menu>
 
         </Sidebar>
