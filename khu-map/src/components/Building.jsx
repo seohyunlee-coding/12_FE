@@ -22,13 +22,6 @@ export default function Building({ x, y, scale = 0.35, src, buildingID, building
         }
     )
 
-    // TODO: 백엔드의 건물 데이터베이스 확인하고 API응답 조율하기
-    // const fetchBuildingInfo = async (buildingID) => {
-    //     const response = await fetch(`http://localhost:8080/building/?id=${buildingID}`);
-    //     const data = await response.json();
-    //     return data;
-    // }
-
     const style = {
         position: "absolute",
         display: "flex",
