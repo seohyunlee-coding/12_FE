@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import "../styles/building.css";
 import BuildingDetail from "./BuildingDetail";
-import RoadDetail from "./RoadDetail";
 
-export default function Building({ x, y, src, buildingID, buildingName, movetoPos, setIndex, resetIndex, isSelected, isBuilding = true, status = 0 }) {
+export default function Building({ x, y, scale = 0.35, src, buildingID, buildingName, zindex, setIndex, resetIndex, isSelected }) {
 
     const [size, setSize] = useState({ width: 0, height: 0 });
     // const [isPopupShown, setisPopupShown] = useState(false);
@@ -47,23 +46,27 @@ export default function Building({ x, y, src, buildingID, buildingName, movetoPo
             <div style={
                 {
                     position: "absolute",
-                    bottom: size.height + 20 + "px",
-                    display: isSelected ? "block" : "none",
-                    opacity: isSelected ? 1 : 0,
-                    transition: "opacity 0.3s",
+                    bottom: size.height * (scale + 0.1) + "px",
+                    pointerEvents: "none",
+                    transform: isSelected ? "translateY(-10%)" : "translateY(0px)",
+                    transition: "transform 0.1s",
+                    zIndex: 1000 + zindex,
                 }
             }>
-                {isBuilding ? <BuildingDetail buildingName={buildingName} /> : <RoadDetail status={status} />}
+                <BuildingDetail buildingName={buildingName} isSelected={isSelected} onHover={setIndex} onHoverEnd={resetIndex} />
             </div>
             <img
-                style={{ width: "100%", height: "100%" }}
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    transform: isSelected ? `scale(${scale + 0.05})` : `scale(${scale})`,
+                    zIndex: zindex,
+                    pointerEvents: "none"
+                }}
                 src={src}
                 className="building"
-                onMouseDown={(e) => { e.stopPropagation() }}
                 draggable={false}
-                onMouseEnter={() => { setIndex() }}
-                onMouseLeave={() => { resetIndex() }}
-                onClick={() => { movetoPos(x + size.width, y + size.height, true) }}
+            // onClick={() => { movetoPos(x + size.width / 2, y + size.height / 2, true) }}
             />
         </div>
     )

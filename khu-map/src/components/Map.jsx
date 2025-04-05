@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import placeHolder from '../assets/placeholder.jpg';
+import map_base from '../assets/map/map_topography.png';
+import road_base from '../assets/map/map_side_road.png';
+import road_highlight from '../assets/map/map_main_road.png';
+
 
 export default function Map({ children }) {
     const containerRef = useRef(null);
@@ -9,7 +12,7 @@ export default function Map({ children }) {
     const [isDragging, setIsDragging] = useState(false);
     const [isAnimated, setIsAnimated] = useState(false);
     const [scale, setScale] = useState(0.5);
-    const [translate, setTranslate] = useState({ x: (-window.innerWidth - imageSize.width) * scale, y: -window.innerHeight * scale });
+    const [translate, setTranslate] = useState({ x: (- window.innerWidth - imageSize.width + 300), y: -2 * window.innerHeight + 130 });
 
     const handleWheel = useCallback(
         (e) => {
@@ -28,7 +31,7 @@ export default function Map({ children }) {
 
     useEffect(() => {
         const img = new Image();
-        img.src = placeHolder;
+        img.src = map_base;
         img.onload = () => {
             setImageSize({ width: img.width, height: img.height });
             window.innerWidth / window.innerHeight > img.width / img.height
@@ -62,28 +65,6 @@ export default function Map({ children }) {
         return () => window.removeEventListener('resize', handleResize);
     }, [imageSize]);
 
-    // 맵 클릭 시 해당 지점을 중앙에 맞춤
-    // const centerOnClick = (e) => {
-    //     if (!containerRef.current) return;
-    //     const container = containerRef.current;
-    //     const rect = container.getBoundingClientRect();
-
-    //     // 클릭 지점(스크롤 고려)
-    //     const offsetX = e.clientX - rect.left + container.scrollLeft;
-    //     const offsetY = e.clientY - rect.top + container.scrollTop;
-
-    //     const containerWidth = container.clientWidth;
-    //     const containerHeight = container.clientHeight;
-
-    //     // 중앙 배치 계산 (클램핑)
-    //     let newScrollLeft = offsetX - containerWidth / 2;
-    //     let newScrollTop = offsetY - containerHeight / 2;
-    //     newScrollLeft = Math.max(0, Math.min(newScrollLeft, container.scrollWidth - containerWidth));
-    //     newScrollTop = Math.max(0, Math.min(newScrollTop, container.scrollHeight - containerHeight));
-
-    //     container.scrollLeft = newScrollLeft;
-    //     container.scrollTop = newScrollTop;
-    // };
 
     function movetoPos(x, y, isAbs = false) {
         setIsAnimated(true);
@@ -93,9 +74,10 @@ export default function Map({ children }) {
 
         if (isAbs) {
             setTranslate({
-                x: - x * scale,
-                y: - y * scale,
+                x: x * scale / 2,
+                y: y * scale,
             });
+            console.log(x, y)
         }
         else {
             setTranslate({
@@ -163,23 +145,42 @@ export default function Map({ children }) {
                 }}
             >
                 <img
-                    src={placeHolder}
+                    src={map_base}
                     alt="Map"
                     style={{
+                        position: "absolute",
                         objectFit: "contain",
                         userSelect: "none",
                     }}
                     draggable={false}
-                    onClick={() => {
-                        setHoveredIndex(null);
-                        // centerOnClick(e);
+                    onClick={() => { setHoveredIndex(null); }}
+                />
+                <img
+                    src={road_highlight}
+                    alt="Map"
+                    style={{
+                        position: "absolute",
+                        objectFit: "contain",
+                        userSelect: "none",
+                        pointerEvents: "none",
                     }}
+                    draggable={false}
+                />
+                <img
+                    src={road_base}
+                    alt="Map"
+                    style={{
+                        position: "absolute",
+                        objectFit: "contain",
+                        userSelect: "none",
+                        pointerEvents: "none",
+                    }}
+                    draggable={false}
                 />
                 {React.Children.map(children, (child, index) =>
                     React.cloneElement(child, {
-                        setIndex: () => setHoveredIndex(index),
-                        resetIndex: () => setHoveredIndex(null),
-                        movetoPos: movetoPos,
+                        setIndex: () => { setHoveredIndex(index) },
+                        resetIndex: () => { setHoveredIndex(null) },
                         isSelected: hoveredIndex === index,
                     })
                 )}
