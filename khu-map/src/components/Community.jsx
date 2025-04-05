@@ -78,7 +78,7 @@ export default function Community() {
                       setIsPostSelected(true);
                     }}
                   >
-                    <img src={src.images.length > 0 ? "https://movingju.pythonanywhere.com" + src.images[0] : ""} alt={`img-${src.id}`} />
+                    <img src={src.images.length > 0 ? "http://localhost:5000" + src.images[0] : ""} alt={`img-${src.id}`} />
                   </div>
                 ))}
               </div>
@@ -97,7 +97,7 @@ export default function Community() {
             >
               <img src={arrown_icon} alt="close" style={{ width: "50px", height: "50px" }} />
             </button>
-            <img src={"https://movingju.pythonanywhere.com" + selectedPost.images[0]} alt="img" className="selected-image" />
+            <img src={"http://localhost:5000" + selectedPost.images[0]} alt="img" className="selected-image" />
           </div>
         )}
       </div>
