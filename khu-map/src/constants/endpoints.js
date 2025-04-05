@@ -1,8 +1,8 @@
-const BUILDINGAPI = "http://localhost:5000/buildings";
-const POSTSAPI = "http://localhost:5000/posts";
-const COMMENTSAPI = "http://localhost:5000/comments";
-const AUTOCOMPLETEAPI = "http://localhost:5000/autocomplete";
-const NAVIGATEAPI = "http://localhost:5000/navigate";
-const TIPSAPI = "http://localhost:5000/tips";
+const BUILDINGAPI = "https://movingju.pythonanywhere.com/buildings";
+const POSTSAPI = "https://movingju.pythonanywhere.com/posts";
+const COMMENTSAPI = "https://movingju.pythonanywhere.com/comments";
+const AUTOCOMPLETEAPI = "https://movingju.pythonanywhere.com/autocomplete";
+const NAVIGATEAPI = "https://movingju.pythonanywhere.com/navigate";
+const TIPSAPI = "https://movingju.pythonanywhere.com/tips";
 
 export { BUILDINGAPI, POSTSAPI, COMMENTSAPI, AUTOCOMPLETEAPI, NAVIGATEAPI, TIPSAPI };
