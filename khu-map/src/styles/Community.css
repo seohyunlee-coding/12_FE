@@ -26,7 +26,7 @@
 }
 
 .search-bar {
-  height: 5%;
+  height: 4%;
   width: 94%;
   margin-bottom: 5%;
   margin-top: 2%;
@@ -37,6 +37,7 @@
 }
 
 .search-input {
+  margin-left: 0;
   font-size: 12px;
   border: none;
   box-shadow: none;
@@ -105,7 +106,7 @@
 
 .selected-image {
   object-fit: contain; /* 이미지 비율 유지 */
-  max-width: 70%;
+  max-width: 90% ;
   max-height: 90%;
   margin: auto;
   border-radius: 1em;
@@ -154,11 +155,12 @@
   background-color: #e9e5e5;
   width: 80%;
   border: none;
-  border-radius: 1em;
-  height: 60%;
+  border-radius: 20px;
+  height: 52px;
   padding: 0 5%;
   margin-bottom: 10%;
   outline: none;
+  font-size: 20px;
 }
 
 .selected-image-comment-input input::placeholder {

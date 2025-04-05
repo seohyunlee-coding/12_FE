@@ -7,14 +7,14 @@ import arrown_icon from "../assets/arrow-left.png";
 import map_icon from "../assets/map-icon.png";
 
 const images = [
-  { id: 1, building: "노천극장", url: "https://picsum.photos/300/400" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/200/200" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/200/350" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/300/450" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/200/150" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/200/300" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/200/450" },
-  { id: 1, building: "노천극장", url: "https://picsum.photos/300/400" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/3000/4000" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/2000/2000" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/2000/3050" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/3000/4500" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/2000/1500" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/2000/3000" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/2000/4500" },
+  { id: 1, building: "노천극장", url: "https://picsum.photos/3000/4000" },
 ];
 
 const ImageComents = [
@@ -86,7 +86,7 @@ export default function Community() {
                 setSelectedImage(null);
               }}
             >
-                <img src={arrown_icon} alt="close" style={{width: "24px", height:"24px"}}/>
+                <img src={arrown_icon} alt="close" style={{width: "50px", height:"50px"}}/>
             </button>
             <img src={selectedImage.url} alt="img" className="selected-image" />
           </div>
@@ -102,15 +102,15 @@ export default function Community() {
         {IsImageSelected && ( // IsImageSelected가 true일 때만 렌더링
           <div className="selected-image-comment">
             <div className="selected-image-comment-header">
-              <p style={{marginLeft: '5%',marginTop: '4%', fontSize: "20px"}} >사진 댓글</p>
-              <button style={{marginLeft: '50%', border: "none", background: "none"}}><img src={heart_icon} alt="heart" style={{width: "24px", height:"24px",cursor: "pointer"}}/></button>
-              <button style={{border: "none", background: "none"}}><img src={down_icon} alt="down" style={{width: "24px", height:"24px",cursor: "pointer"}}/></button>
+              <p style={{marginLeft: '5%',marginTop: '4%', fontSize: "30px"}} >사진 댓글</p>
+              <button style={{marginLeft: '60%', border: "none", background: "none"}}><img src={heart_icon} alt="heart" style={{width: "36px" , height:"36px",cursor: "pointer"}}/></button>
+              <button style={{border: "none", background: "none"}}><img src={down_icon} alt="down" style={{width: "36px", height:"36px",cursor: "pointer"}}/></button>
             </div>
             <div className="selected-image-comment-body" style={{overflowY: "scroll", justifyContent: "flex-start", scrollbarWidth: "none",}}>
                 {ImageComents.map((comment, index) => (
-                    <div className="selected-image-comment-item" key={index} style={{boxShadow: "0px 2px 6px #0000001A", marginLeft: "5%", marginRight: "5%", marginTop: "2%", height:"auto",width:"90%",borderRadius:"0.7em"}}>
-                    <p className="comment-content" style={{margin:"2% 5%", fontSize:"12px"}}>{comment.content}</p>
-                    <p className="comment-info" style={{color: "#C0C0C0", marginLeft:"5%",marginBottom:"4%",marginTop:"0", fontSize:"8px"}}>{comment.created_at + " | " + comment.author}</p>
+                    <div className="selected-image-comment-item" key={index} style={{boxShadow: "0px 4px 6px #0000001A", marginLeft: "5%", marginRight: "5%", marginTop: "2%", height:"auto",width:"90%",borderRadius:"20px"}}>
+                    <p className="comment-content" style={{margin:"2% 5%", fontSize:"20px"}}>{comment.content}</p>
+                    <p className="comment-info" style={{color: "#C0C0C0", marginLeft:"5%",marginBottom:"4%",marginTop:"0", fontSize:"15px"}}>{comment.created_at + " | " + comment.author}</p>
                     </div>
                 ))}
             </div>
@@ -122,10 +122,10 @@ export default function Community() {
         )}
         {!IsImageSelected && ( // IsImageSelected가 false일 때만 렌더링
           <div>
-            <div style={{display:"flex"}}><p style={{marginLeft: '5%',marginTop: '4%', fontSize: "20px"}}>나의 활동</p><button style={{border:"none", background:"none", marginLeft:"63%", cursor:"pointer"}}><img src={map_icon} alt="map_icon" style={{ width:"22px", height:"22px"}}/></button></div>
-            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",marginBottom:"2%",fontSize:"14px"}}>내가 올린 사진</p>
-            <p  style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",marginBottom:"2%",fontSize:"14px"}}>댓글 단 사진</p>
-            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",marginBottom:"2%",fontSize:"14px"}}>좋아요 한 사진</p>
+            <div style={{display:"flex"}}><p style={{marginLeft: '5%',marginTop: '4%', fontSize: "30px"}}>나의 활동</p><button style={{border:"none", background:"none", marginLeft:"70%", cursor:"pointer"}}><img src={map_icon} alt="map_icon" style={{ width:"36px", height:"36px"}}/></button></div>
+            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px", alignItems:"center", display:"flex",}}>내가 올린 사진</p>
+            <p  style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px",alignItems:"center", display:"flex"}}>댓글 단 사진</p>
+            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px",alignItems:"center", display:"flex"}}>좋아요 한 사진</p>
 
           </div>
         )}
