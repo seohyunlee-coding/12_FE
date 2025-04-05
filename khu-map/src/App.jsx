@@ -12,6 +12,7 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import Building from './components/building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
+import Community from './components/Community.jsx';
 
 function App() {
   // 검색창 - usestate 설정

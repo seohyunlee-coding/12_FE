@@ -46,7 +46,7 @@ export default function Building(props) {
                 onMouseDown={(e) => { e.stopPropagation() }}
                 draggable={false}
             />
-            <BuildingDetail name={props.name}/>
+            <BuildingDetail />
         </div>
     )
 }
