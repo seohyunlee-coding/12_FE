@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'; // router 라이브러리 react-router-
 import { buildingCordinates } from './constants/constants.js'
 import Building from './components/Building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
+import Community from './components/Community.jsx';
 
 import { fetchBuildingList, fetchTips, fetchRoadList } from './hooks/Map/fetchFunctions.js'
 import TipCarousel from './components/TipCarousel.jsx'
