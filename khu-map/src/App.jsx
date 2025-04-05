@@ -44,7 +44,6 @@ function App() {
 
   return (
     <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
-      <Community/>
       <Map>
         {markers.map((marker) => (
         <Building
