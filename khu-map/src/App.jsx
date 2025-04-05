@@ -38,6 +38,17 @@ import compose from "./assets/compose.jpg"
 import emart24 from "./assets/emart24.png"
 import gs25 from "./assets/gs25.jpg"
 
+import floor0 from "./assets/B1.png"
+import floor1 from "./assets/floor1.png"
+import floor2 from "./assets/floor2.png"
+import floor3 from "./assets/floor3.png"
+import floor4 from "./assets/floor4.png"
+import floor5 from "./assets/floor5.png"
+import floor6 from "./assets/floor6.png"
+import floor7 from "./assets/floor7.png"
+import memo from "./assets/memo.png"
+
+
 import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'; // 사이드바 라이브러리 react-pro-sidebar
 
 import { Link } from 'react-router-dom'; // router 라이브러리 react-router-dom
@@ -53,6 +64,31 @@ import PlaceBadge from './components/PlaceBadge.jsx'
 import { assetPos, assetBasePath } from "./constants/assets.js"
 
 function App() {
+  const [selectedFloor, setSelectedFloor] = useState(null);
+
+  // 이미지 매핑 (층별 이미지 경로)
+  const floorImages = {
+    0: floor0,
+    1: floor1,
+    2: floor2,
+    3: floor3,
+    4: floor4,
+    5: floor5,
+    6: floor6,
+    7: floor7,
+  };
+
+  // 버튼 스타일
+  const getButtonStyle = (floor) => ({
+    backgroundColor: selectedFloor === floor ? '#921815' : '#ffffff',
+    color: selectedFloor === floor ? '#fff' : '#000',
+    border: 'none',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    cursor: 'pointer',
+  });
+
   const [inputValue, setInputValue] = useState(' ');  // 검색창 - usestate 설정
   const [activePanel, setActivePanel] = useState(null);   // 길찾기 패널 - usestate 설정
 
@@ -68,6 +104,7 @@ function App() {
   const [isCommunityOpen, setIsCommunityOpen] = useState(false); // 커뮤니티 패널 열기
   const [isBadgeOpen, setIsBadgeOpen] = useState(false); // 배지 패널 열기
   const [activeModal, setActiveModal] = useState(null); // 주변시설 모달 열기
+  const [activeModal_building, setActiveModal_building] = useState(null); // 건물정보용 모달 열기
 
   const getInitData = useCallback(async () => {
     fetchBuildingList().then(data => setBuildingArr(data)).catch((error) => {
@@ -153,6 +190,17 @@ function App() {
     },
   };
 
+
+  const btnStyle = {
+    borderRadius: '50%',
+    width: '45px',
+    height: '45px',
+    color: 'white',
+    backgroundColor: '#8F7C7C',
+    border: 'none',
+    fontSize: '20px',
+    cursor: 'pointer',
+  };
 
   //패널 닫기 - 이벤트 리스너
   useEffect(() => {
@@ -253,6 +301,42 @@ function App() {
                 backgroundColor: "#8f7c7c",
                 opacity: '0.2'
               }}></hr>
+            </div>
+          </>
+        );
+
+
+      case 'building-information':
+        return (
+          <>
+            <div style={{ padding: '20px' }}>
+              <h2 style={{
+                textAlign: 'left',
+                marginTop: "-10px",
+                marginBottom: "8px",
+                fontSize: "18px",
+                fontWeight: '700',
+                lineHeight: '27px'
+              }}>건물정보</h2>
+
+              <p onClick={() => setActiveModal_building('식당')} style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '24px', cursor: 'pointer' }}>전자정보대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>예술디자인대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>공과대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>외국어대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>체육대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>생명과학대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>국제경영관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>멀티미디어교육관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>글로벌관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>국제대학</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>중앙도서관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>학생회관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>기숙사</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>선승관</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>노천극장</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>사색의 광장</p>
+              <p style={{ fontSize: '17px', fontWeight: '400', color: '000000', marginTop: '5px', cursor: 'pointer' }}>대운동장</p>
+
             </div>
           </>
         );
@@ -583,6 +667,7 @@ function App() {
             </div>
 
             <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('direction'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 길찾기 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('building-information'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 건물정보 </MenuItem>
             <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('around'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 주변시설 </MenuItem>
             <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('partner'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}> 제휴시설 </MenuItem>
             <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('tour'); setIsChallengeOpen(false); setIsCommunityOpen(false); setIsBadgeOpen(false) }}>캠퍼스투어</MenuItem>
@@ -664,6 +749,114 @@ function App() {
           )}
 
 
+          {/* 건물 정보용 모달 */}{activeModal_building && (
+            <div
+              className="modal-overlay"
+              style={{
+                position: 'absolute',
+                width: '1500px',
+                height: '860px',
+                zIndex: 10,
+                backgroundColor: '#ffffff',
+                borderRadius: '20px',
+                boxShadow: '1px 0px 10px 1px rgb(174, 174, 174)',
+                top: '50%',
+                marginLeft: '300px',
+                overflow: 'hidden',
+              }}
+            >
+              {/* 닫기 버튼 */}
+              <img
+                src={x}
+                onClick={() => setActiveModal_building(null)}
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  padding: '20px',
+                  width: '20px',
+                  height: '20px',
+                  cursor: 'pointer',
+                }}
+              />
+
+              <div className="modal-content" style={{ padding: '13px' }}>
+                <p
+                  style={{
+                    color: '#8f7c7c',
+                    fontWeight: '400',
+                    fontSize: '15px',
+                    marginTop: '3px',
+                  }}
+                >
+                  전자정보대학
+                </p>
+
+                {/* 이미지와 버튼을 나란히 배치 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: '10px',
+                  }}
+                >
+
+                  <div>
+                    <img src={memo} style={{ width: '150%', height: '150%', marginTop: '500px', marginLeft: '20px' }} />
+                  </div>
+                  {/* 왼쪽 이미지 */}
+                  <div>
+                    <img
+                      src={floorImages[selectedFloor] || square} // 선택된 이미지가 없으면 기본 이미지
+                      style={{
+                        boxSizing: 'border-box',
+                        width: '90%',
+                        height: '90%',
+                        borderRadius: '20px',
+                        padding: '50px',
+                        marginTop: '-20px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+
+                  {/* 오른쪽 버튼 */}
+                  <div style={{ textAlign: 'right' }}>
+                    <div
+                      id="oval"
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '15px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'rgb(219, 206, 206)',
+                        width: '70px',
+                        height: '450px',
+                        borderRadius: '50px',
+                        marginTop: '200px',
+                        marginRight: '50px'
+                      }}
+                    >
+                      {[7, 6, 5, 4, 3, 2, 1, 0].map((floor) => (
+                        <button
+                          key={floor}
+                          style={getButtonStyle(floor)}
+                          onClick={() => setSelectedFloor(floor)}
+                        >
+                          {floor}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+
+
           {/*검색창*/}
           <div className='search-form' style={{ zIndex: 1, width: activePanel ? '300px' : '500px' }} >
             <form onSubmit={handleSubmit} className='search-container'>
@@ -680,7 +873,7 @@ function App() {
           </div>
         </div>
 
-      </div>
+      </div >
     </div >
   )
 }
