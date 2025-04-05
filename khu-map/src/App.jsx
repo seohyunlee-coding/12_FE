@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 
 import './styles/App.css'
 import Map from './components/Map.jsx'
@@ -12,6 +12,8 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar';
 
 // router 라이브러리 react-router-dom
 import { Link } from 'react-router-dom';
+
+import { buildingCordinates } from './constants/constants.js'
 import Building from './components/building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
 
@@ -23,7 +25,28 @@ function App() {
   const [inputValue, setInputValue] = useState(' ');
   // 길찾기 패널 - usestate 설정
   const [showDirections, setShowDirections] = useState(false);
+  const [buildingArr, setBuildingArr] = useState([{ "x": 0, "y": 0, "name": "공학관", "src": placeholder_small }]);
+  const [roadArr, setRoadArr] = useState([{ "x": 0, "y": 0, "status": "0", "src": placeholder_small }]);
+  const [tipArr, setTipArr] = useState([{ content: "A" }, { content: "B" }, { content: "C" }]);
 
+  const getData = useCallback(async () => {
+    setBuildingArr(
+      await fetchBuildingList().catch((error) => {
+        console.error("Error fetching building list:", error);
+      }));
+    setTipArr(
+      await fetchTips().catch((error) => {
+        console.error("Error fetching tips:", error);
+      }));
+    setRoadArr(
+      await fetchRoadList().catch((error) => {
+        console.error("Error fetching road list:", error);
+      }));
+  }, [])
+
+  useEffect(() => {
+    getData();
+  })
 
   // 검색창 - 사용자가 입력한 값 받기
   const handleChange = (event) => {
@@ -43,7 +66,7 @@ function App() {
 
 
   return (
-    <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
+    <div style={{ position: "absolute", backgroundColor: "transparent", width: "100vw", pointerEvents: "all" }}>
       <Map>
         <Building src={placeholder_small} x={1000} y={400}></Building>
         <Building src={placeholder_small} x={2000} y={700} isBuilding={false} status={0}></Building>
@@ -79,7 +102,7 @@ function App() {
 
             <MenuItem> 길찾기 </MenuItem>
             <SubMenu label="주변시설">
-              <MenuItem> 편의시설 </MenuItem>
+              <MenuItem > 편의시설 </MenuItem>
               <MenuItem> 제휴시설 </MenuItem>
             </SubMenu>
 
@@ -93,7 +116,7 @@ function App() {
         </Sidebar>
 
         <div style={{ display: 'flex', flexDirection: 'row', position: "absolute", width: "100vw", left: "150px", }}>
-          <div style={{ height: "min-content" }}><h1>지도 검색창</h1></div>
+          {/* <div style={{ height: "min-content" }}><h1>지도 검색창</h1></div> */}
 
           {/*검색창*/}
           <div className='search-form'>
