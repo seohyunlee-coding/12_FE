@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'; 
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './styles/App.css'
 import Map from './components/Map.jsx'
+import Tips from './components/Tips.jsx'
+import TipsLayout from './components/TipsLayout.jsx'
 
 import school_logo from "./assets/logo.png"
 import award from "./assets/award.png"
@@ -11,15 +12,41 @@ import searchIcon from "./assets/search_icon.svg" // 검색 아이콘 불러오�
 import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'; // 사이드바 라이브러리 react-pro-sidebar
 
 import { Link } from 'react-router-dom'; // router 라이브러리 react-router-dom
-import Building from './components/building.jsx';
+
+import { buildingCordinates } from './constants/constants.js'
+import Building from './components/Building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
 import Community from './components/Community.jsx';
+
+import { fetchBuildingList, fetchTips, fetchRoadList } from './hooks/Map/fetchFunctions.js'
+import TipCarousel from './components/TipCarousel.jsx'
 
 function App() {
   const [inputValue, setInputValue] = useState(' ');  // 검색창 - usestate 설정
   const [activePanel, setActivePanel] = useState(null);   // 길찾기 패널 - usestate 설정
   const [start, setStart] = useState(''); //출발지 입력값
-  const [end, setEnd] = useState('') //도착지 입력값
+  const [end, setEnd] = useState('') //도착지 입력값  const [buildingArr, setBuildingArr] = useState([{ "x": 0, "y": 0, "name": "공학관", "src": placeholder_small }]);
+  const [roadArr, setRoadArr] = useState([{ "x": 0, "y": 0, "status": "0", "src": placeholder_small }]);
+  const [tipArr, setTipArr] = useState([{ content: "A" }, { content: "B" }, { content: "C" }]);
+
+  const getData = useCallback(async () => {
+    setBuildingArr(
+      await fetchBuildingList().catch((error) => {
+        console.error("Error fetching building list:", error);
+      }));
+    setTipArr(
+      await fetchTips().catch((error) => {
+        console.error("Error fetching tips:", error);
+      }));
+    setRoadArr(
+      await fetchRoadList().catch((error) => {
+        console.error("Error fetching road list:", error);
+      }));
+  }, [])
+
+  useEffect(() => {
+    getData();
+  })
 
   // 검색창 - 사용자가 입력한 값 받기
   const handleChange = (event) => {
@@ -33,9 +60,9 @@ function App() {
   }
 
   //패널 닫기 - 이벤트 리스너
-  useEffect(()=> {
+  useEffect(() => {
     const handleOutsideClick = (event) => {
-      if(!document.getElementById('direction-panel')?.contains(event.target)){
+      if (!document.getElementById('direction-panel')?.contains(event.target)) {
         setActivePanel(null)
       }
     }
@@ -52,16 +79,16 @@ function App() {
       case 'direction':
         return (
           <>
-            <div style={{padding:'20px'}}>
-              <h2 style={{ 
+            <div style={{ padding: '20px' }}>
+              <h2 style={{
                 textAlign: 'left',
                 marginTop: "-10px",
-                marginBottom: "8px", 
-                fontSize: "18px", 
-                color: "#333", 
+                marginBottom: "8px",
+                fontSize: "18px",
+                color: "#333",
                 fontWeight: '700',
-                fontSize: '18px',
-                lineHeight: '27px'  }}>길찾기</h2>
+                lineHeight: '27px'
+              }}>길찾기</h2>
 
               <div style={{ width: "100%", marginBottom: "2px" }}>
 
@@ -77,7 +104,7 @@ function App() {
                     marginTop: "4px",
                     backgroundColor: '#EAEAEA'
                   }}
-                  onChange={(e)=> setStart(e.target.value)}
+                  onChange={(e) => setStart(e.target.value)}
                   placeholder="출발지 입력"
                 />
               </div>
@@ -99,39 +126,39 @@ function App() {
                   placeholder="도착지 입력"
                 />
               </div>
-            {/* 나중에 길찾기 로직 구현후 수정 */}
-            <button
-            style={{
-              width: "75px",
-              height: "28px",
-              border: "none",
-              borderRadius: "13.5px",
-              outline: "none",
-              color: "white",
-              fontSize:'12px',
-              backgroundColor: '#9E1815'
-            }}
+              {/* 나중에 길찾기 로직 구현후 수정 */}
+              <button
+                style={{
+                  width: "75px",
+                  height: "28px",
+                  border: "none",
+                  borderRadius: "13.5px",
+                  outline: "none",
+                  color: "white",
+                  fontSize: '12px',
+                  backgroundColor: '#9E1815'
+                }}
 
-            >길찾기 &gt;</button>
+              >길찾기 &gt;</button>
 
-          <hr style = {{
-            width: "225px", 
-            marginTop: "10px",
-            backgroundColor:"#8f7c7c",
-            opacity: '0.2'
-            }}></hr>
+              <hr style={{
+                width: "225px",
+                marginTop: "10px",
+                backgroundColor: "#8f7c7c",
+                opacity: '0.2'
+              }}></hr>
 
-          <p style={{fontSize: '15px', fontWeight:'500', marginBottom:'5px'}}>예상 소요 시간</p>
-          <p style={{fontSize:'10px', fontWeight:'400', color: '9D8C8C', marginTop:'0px'}}>*도보 측정 기준</p>
+              <p style={{ fontSize: '15px', fontWeight: '500', marginBottom: '5px' }}>예상 소요 시간</p>
+              <p style={{ fontSize: '10px', fontWeight: '400', color: '9D8C8C', marginTop: '0px' }}>*도보 측정 기준</p>
 
-          <hr style = {{
-            position:'absolute',
-            width: "100%", 
-            marginTop: "10px",
-            backgroundColor:"#8f7c7c",
-            opacity: '0.2'
-            }}></hr>
-          </div>
+              <hr style={{
+                position: 'absolute',
+                width: "100%",
+                marginTop: "10px",
+                backgroundColor: "#8f7c7c",
+                opacity: '0.2'
+              }}></hr>
+            </div>
           </>
         );
 
@@ -182,7 +209,7 @@ function App() {
         return null;
     }
   };
-   
+
 
   const markers = [
     { id: 1, name: "자대", x: 1000, y: 400 },
@@ -190,20 +217,25 @@ function App() {
   ];
 
   return (
-    <div style={{ position: "absolute", backgroundColor: "transparent", pointerEvents: "all" }}>
+    <div style={{ position: "absolute", backgroundColor: "transparent", width: "100vw", pointerEvents: "all" }}>
       <Map>
         {markers.map((marker) => (
-        <Building
-          src = {placeholder_small}
-          x={marker.x}
-          y={marker.y}
-          name={marker.name}
-        >
-        </Building>
+          <Building
+            src={placeholder_small}
+            x={marker.x}
+            y={marker.y}
+            name={marker.name}
+            isBuilding={true}
+          >
+          </Building>
         ))}
       </Map>
 
-      <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0'}}>
+      <TipsLayout>
+        <TipCarousel tipObjects={tipArr}></TipCarousel>
+        <Tips />
+      </TipsLayout>
+      <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0', userSelect: 'none' }}>
         {/* 사이드바 */}
         <Sidebar
           backgroundColor='#ffffff'
@@ -216,7 +248,7 @@ function App() {
             borderRadius: '0 15px 15px 0',
             overflow: 'hidden',
             boxShadow: '1px 0px 10px 1px rgb(174, 174, 174)',
-            zIndex:4
+            zIndex: 4
           }}
         >
           <Menu
@@ -230,32 +262,32 @@ function App() {
             }}
           >
             <div>
-            <img src={school_logo} alt="경희대로고" style={{width: "56px", height:"42px", marginTop:"20px", marginLeft:"17px"}}/>
+              <img src={school_logo} alt="경희대로고" style={{ width: "56px", height: "42px", marginTop: "20px", marginLeft: "17px" }} />
             </div>
             <div>
-            <img src={map} style={{width: "24px", height:"24px", marginTop:"28px", marginLeft:"21px", marginBottom: "5px"}}/>
+              <img src={map} style={{ width: "24px", height: "24px", marginTop: "28px", marginLeft: "21px", marginBottom: "5px" }} />
             </div>
 
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('direction')}}> 길찾기 </MenuItem>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('around')}}> 주변시설 </MenuItem>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('partner')}}> 제휴시설 </MenuItem>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('tour')}}>캠퍼스투어</MenuItem>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('event')}}> 행사 </MenuItem>
-            <hr style = {{width: "92px", backgroundColor:"#8f7c7c", marginRight:"35px", opacity: '0.4'}}></hr>
-            <img src={talk} style={{width: "22px", height:"22px", marginTop:"17px", marginLeft:"21px", marginBottom: "5px"}}/>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('community')}}> 커뮤니티 </MenuItem>
-            <hr style = {{width: "92px", backgroundColor:"#8f7c7c", marginRight:"35px", opacity: '0.4'}}></hr>
-            <img src={award} style={{width: "26px", height:"26px", marginTop:"17px", marginLeft:"17px", marginBottom: "5px"}}/>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('challenge')}}> 도전과제 </MenuItem>
-            <MenuItem onClick={(e)=> {e.stopPropagation(); setActivePanel('badge')}}> 장소 배지 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('direction') }}> 길찾기 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('around') }}> 주변시설 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('partner') }}> 제휴시설 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('tour') }}>캠퍼스투어</MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('event') }}> 행사 </MenuItem>
+            <hr style={{ width: "92px", backgroundColor: "#8f7c7c", marginRight: "35px", opacity: '0.4' }}></hr>
+            <img src={talk} style={{ width: "22px", height: "22px", marginTop: "17px", marginLeft: "21px", marginBottom: "5px" }} />
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('community') }}> 커뮤니티 </MenuItem>
+            <hr style={{ width: "92px", backgroundColor: "#8f7c7c", marginRight: "35px", opacity: '0.4' }}></hr>
+            <img src={award} style={{ width: "26px", height: "26px", marginTop: "17px", marginLeft: "17px", marginBottom: "5px" }} />
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('challenge') }}> 도전과제 </MenuItem>
+            <MenuItem onClick={(e) => { e.stopPropagation(); setActivePanel('badge') }}> 장소 배지 </MenuItem>
           </Menu>
 
         </Sidebar>
 
-        <div style={{ display: 'flex', flexDirection: 'row', position: "absolute", width: "100vw", left: "150px", zIndex: '2'}}>
-        {/*공통 패널 */} 
+        <div style={{ display: 'flex', flexDirection: 'row', position: "absolute", width: "100vw", left: "150px", zIndex: '2' }}>
+          {/*공통 패널 */}
           <div id='direction-panel'
-            style={{ 
+            style={{
               position: 'absolute',
               top: 0,
               left: activePanel ? '-20px' : '-300px', // 패널이 보일 때 0px, 숨길 때 -300px
@@ -264,21 +296,21 @@ function App() {
               backgroundColor: 'white',
               transition: 'left 0.3s ease-in-out',
               padding: '20px',
-              zIndex:3,
+              zIndex: 3,
               boxShadow: '1px 0px 10px 1px rgb(174, 174, 174)',
               // 컨텐츠 정렬
               display: 'flex',
               flexDirection: 'column',
 
-              }}
-              onClick={(e) => e.stopPropagation()}
-              >
-                {renderPanel()}
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {renderPanel()}
           </div>
 
 
           {/*검색창*/}
-          <div className='search-form' style={{zIndex: 1, width: activePanel ? '300px' : '500px'}} > 
+          <div className='search-form' style={{ zIndex: 1, width: activePanel ? '300px' : '500px' }} >
             <form onSubmit={handleSubmit} className='search-container'>
               <input
                 className="search-input"
@@ -298,10 +330,4 @@ function App() {
   )
 }
 
-
-
-
 export default App
-
-
-
