@@ -87,11 +87,11 @@ export default function Community() {
       {/* 이미지 검색 칸 */}
       <div className="community_firstrow">
         {/* 검색창 */}
-        <div className="search-bar">
+        <div className="community-search-bar">
           <input
             type="text"
             placeholder="건물/사진 검색"
-            className="search-input"
+            className="community-search-input"
           />
           <button className="community-search-button">
             <img src={search_icon} alt="search_icon" />
@@ -151,17 +151,17 @@ export default function Community() {
               <p>댓글 내용</p>
             </div>
             <div className="selected-image-comment-input">
-                <input type="text" placeholder="댓글 추가" />
-                <button>등록</button>
+              <input type="text" placeholder="댓글 추가" />
+              <button>등록</button>
             </div>
           </div>
         )}
         {!IsImageSelected && ( // IsImageSelected가 true일 때만 렌더링
           <div>
-            <h2 style={{marginLeft: '5%',marginTop: '2%' }}>나의 활동</h2>
-            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>내가 올린 사진</p>
-            <p  style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>댓글 단 사진</p>
-            <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"2em",borderRadius:"1em",}}>좋아요 한 사진</p>
+            <h2 style={{ marginLeft: '5%', marginTop: '2%' }}>나의 활동</h2>
+            <p style={{ paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: "#E9E5E5", height: "2em", borderRadius: "1em", }}>내가 올린 사진</p>
+            <p style={{ paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: "#E9E5E5", height: "2em", borderRadius: "1em", }}>댓글 단 사진</p>
+            <p style={{ paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: "#E9E5E5", height: "2em", borderRadius: "1em", }}>좋아요 한 사진</p>
 
           </div>
         )}

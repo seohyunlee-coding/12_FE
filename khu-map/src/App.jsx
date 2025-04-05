@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import './styles/App.css'
+import './styles/ui.css'
 import Map from './components/Map.jsx'
 import Tips from './components/Tips.jsx'
 import TipsLayout from './components/TipsLayout.jsx'
@@ -13,44 +13,61 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'; // 사이�
 
 import { Link } from 'react-router-dom'; // router 라이브러리 react-router-dom
 
-import { buildingCordinates } from './constants/constants.js'
 import Building from './components/Building.jsx';
-import placeholder_small from './assets/placeholder_small.jpg';
-import Community from './components/Community.jsx';
 
-import { fetchBuildingList, fetchTips, fetchRoadList } from './hooks/Map/fetchFunctions.js'
+import { fetchBuildingList, fetchTips, getAutocomplete } from './hooks/Map/fetchFunctions.js'
 import TipCarousel from './components/TipCarousel.jsx'
+
+import { assetPos, assetBasePath } from "./constants/assets.js"
 
 function App() {
   const [inputValue, setInputValue] = useState(' ');  // 검색창 - usestate 설정
   const [activePanel, setActivePanel] = useState(null);   // 길찾기 패널 - usestate 설정
-  const [start, setStart] = useState(''); //출발지 입력값
-  const [end, setEnd] = useState('') //도착지 입력값  const [buildingArr, setBuildingArr] = useState([{ "x": 0, "y": 0, "name": "공학관", "src": placeholder_small }]);
-  const [roadArr, setRoadArr] = useState([{ "x": 0, "y": 0, "status": "0", "src": placeholder_small }]);
-  const [tipArr, setTipArr] = useState([{ content: "A" }, { content: "B" }, { content: "C" }]);
 
-  const getData = useCallback(async () => {
-    setBuildingArr(
-      await fetchBuildingList().catch((error) => {
-        console.error("Error fetching building list:", error);
-      }));
-    setTipArr(
-      await fetchTips().catch((error) => {
-        console.error("Error fetching tips:", error);
-      }));
-    setRoadArr(
-      await fetchRoadList().catch((error) => {
-        console.error("Error fetching road list:", error);
-      }));
+  const [start, setStart] = useState(''); //출발지 입력값
+  const [end, setEnd] = useState('') //도착지 입력값 
+
+  const [buildingArr, setBuildingArr] = useState([]);
+  const [tipArr, setTipArr] = useState([]);
+
+  const [selectedBuildingIdx, setSelectedBuildingIdx] = useState(null); // 선택된 건물 인덱스
+
+  const getInitData = useCallback(async () => {
+    fetchBuildingList().then(data => setBuildingArr(data)).catch((error) => {
+      console.error("Error fetching building list:", error);
+    });
+    console.log(buildingArr)
+
+    fetchTips().then(data => setTipArr(data)).catch((error) => {
+      console.error("Error fetching tips:", error);
+    })
   }, [])
 
   useEffect(() => {
-    getData();
-  })
+    getInitData();
+    console.log(assetPos)
+    console.log(buildingArr[0])
+  }, [])
+
+  const getBuildingTip = (buildingID) => {
+    if (!buildingID) throw new Error("Building ID Expected.");
+
+    fetchTips(buildingID)
+      .then(data => setTipArr(data))
+      .catch((error) => {
+        console.error("Error fetching building tips:", error);
+      });
+  }
 
   // 검색창 - 사용자가 입력한 값 받기
   const handleChange = (event) => {
+    console.log(event.target.value);
     setInputValue(event.target.value);
+    getAutocomplete(event.target.value).then(data => {
+      console.log("Autocomplete data:", data);
+    }).catch((error) => {
+      console.error("Error fetching autocomplete data:", error);
+    });
   }
 
   // 검색창 - form 태그 입력시 자동 새로고침 방지
@@ -211,21 +228,17 @@ function App() {
   };
 
 
-  const markers = [
-    { id: 1, name: "자대", x: 1000, y: 400 },
-    { id: 2, name: "예대", x: 2000, y: 400 },
-  ];
-
   return (
     <div style={{ position: "absolute", backgroundColor: "transparent", width: "100vw", pointerEvents: "all" }}>
       <Map>
-        {markers.map((marker) => (
+        {buildingArr.map((building, idx) => (
           <Building
-            src={placeholder_small}
-            x={marker.x}
-            y={marker.y}
-            name={marker.name}
-            isBuilding={true}
+            key={idx}
+            src={new URL(`${assetBasePath}${building.name}.png`, import.meta.url).href}
+            x={assetPos[Number(building.id) - 1].x}
+            y={assetPos[Number(building.id) - 1].y}
+            zindex={assetPos[Number(building.id) - 1].z}
+            buildingName={building.name.replaceAll("-", " ")}
           >
           </Building>
         ))}
