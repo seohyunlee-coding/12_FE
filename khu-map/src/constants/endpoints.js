@@ -1,5 +1,5 @@
 const BUILDINGAPI = "http://localhost:5000/buildings";
-const POSTSAPI = "http://localhost:5000/community";
+const POSTSAPI = "http://localhost:5000/posts";
 const COMMENTSAPI = "http://localhost:5000/comments";
 const AUTOCOMPLETEAPI = "http://localhost:5000/autocomplete";
 const NAVIGATEAPI = "http://localhost:5000/navigate";
