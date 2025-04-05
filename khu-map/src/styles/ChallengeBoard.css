@@ -1,0 +1,26 @@
+.challengeBoard_container {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }                            
+
+.challengeBoard_firstrow {
+    margin-left: 7%;
+    width: 33%;
+    height: 100%;
+    /* background-color: rosybrown; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+.challengeBoard_secondrow {
+    width: 60%;
+    height: 100%;
+    /* background-color: lightcoral; */
+  }
