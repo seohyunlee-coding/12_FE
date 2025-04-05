@@ -33,20 +33,32 @@ async function fetchTips(buildingID = 0) {
 
 }
 
-async function fetchCommunityPosts(building_id = null) {
+async function fetchCommunityPosts(building_id) {
     try {
-        const response = await Axios.get(`${POSTSAPI}?building_id=${building_id}`);
-        console.log("Response from fetchCommunityPosts:", response.data);
-        return response.data;
+        if (!building_id) {
+            const response = await Axios.get(`${POSTSAPI}`);
+            console.log("Response from fetchCommunityPosts:", response.data);
+            return response.data;
+        } else {
+            const response = await Axios.get(`${POSTSAPI}?building_id=${building_id}`);
+            console.log("Response from fetchCommunityPosts:", response.data);
+            return response.data;
+        }
     } catch (error) {
         throw error;
     }
 }
 async function fetchComments(post_id) {
     try {
-        const response = await Axios.get(`${COMMENTSAPI}?post_id=${post_id}`);
-        console.log("Response from fetchComments:", response.data);
-        return response.data;
+        if (!post_id) {
+            const response = await Axios.get(`${COMMENTSAPI}`);
+            console.log("Response from fetchComments:", response.data);
+            return response.data;
+        } else {
+            const response = await Axios.get(`${COMMENTSAPI}?post_id=${post_id}`);
+            console.log("Response from fetchComments:", response.data);
+            return response.data;
+        }
     } catch (error) {
         throw error;
     }
