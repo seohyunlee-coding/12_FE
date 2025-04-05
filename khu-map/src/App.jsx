@@ -531,6 +531,7 @@ function App() {
       {isBadgeOpen && (<PlaceBadge />)}
       {isChallengeOpen && (<ChallengeBoard />)}
       {isCommunityOpen && (<Community />)}
+
       <Map>
         {buildingArr.map((building, idx) => (
           <Building
@@ -547,8 +548,8 @@ function App() {
 
       <TipsLayout>
         <TipCarousel tipObjects={tipArr}></TipCarousel>
-        <Tips />
       </TipsLayout>
+
       <div style={{ display: 'flex', position: 'absolute', top: '0', left: '0', userSelect: 'none' }}>
         {/* 사이드바 */}
         <Sidebar
