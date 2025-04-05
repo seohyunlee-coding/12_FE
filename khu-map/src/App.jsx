@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { useEffect } from 'react';
 import './styles/App.css'
 import Map from './components/Map.jsx'
 import Tips from './components/Tips.jsx'
@@ -15,7 +14,7 @@ import { Sidebar, SubMenu, Menu, MenuItem } from 'react-pro-sidebar'; // 사이�
 import { Link } from 'react-router-dom'; // router 라이브러리 react-router-dom
 
 import { buildingCordinates } from './constants/constants.js'
-import Building from './components/building.jsx';
+import Building from './components/Building.jsx';
 import placeholder_small from './assets/placeholder_small.jpg';
 
 import { fetchBuildingList, fetchTips, fetchRoadList } from './hooks/Map/fetchFunctions.js'
@@ -87,7 +86,6 @@ function App() {
                 fontSize: "18px",
                 color: "#333",
                 fontWeight: '700',
-                fontSize: '18px',
                 lineHeight: '27px'
               }}>길찾기</h2>
 
