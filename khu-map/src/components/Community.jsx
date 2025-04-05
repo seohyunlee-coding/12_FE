@@ -45,11 +45,11 @@ export default function Community() {
       {/* 이미지 검색 칸 */}
       <div className="community_firstrow">
         {/* 검색창 */}
-        <div className="search-bar">
+        <div className="community-search-bar">
           <input
             type="text"
             placeholder="건물/사진 검색"
-            className="search-input"
+            className="community-search-input"
           />
           <button className="community-search-button">
             <img src={search_icon} alt="search_icon" />
@@ -115,17 +115,21 @@ export default function Community() {
                 ))}
             </div>
             <div className="selected-image-comment-input">
+
                 <input type="text" placeholder="댓글 추가" />
                 {/* <button>등록</button> */}
+
             </div>
           </div>
         )}
         {!IsImageSelected && ( // IsImageSelected가 false일 때만 렌더링
           <div>
+
             <div style={{display:"flex"}}><p style={{marginLeft: '5%',marginTop: '4%', fontSize: "30px"}}>나의 활동</p><button style={{border:"none", background:"none", marginLeft:"70%", cursor:"pointer"}}><img src={map_icon} alt="map_icon" style={{ width:"36px", height:"36px"}}/></button></div>
             <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px", alignItems:"center", display:"flex",}}>내가 올린 사진</p>
             <p  style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px",alignItems:"center", display:"flex"}}>댓글 단 사진</p>
             <p style={{paddingLeft: '5%', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor :"#E9E5E5", height:"60px",borderRadius:"30px",marginBottom:"2%",fontSize:"20px",alignItems:"center", display:"flex"}}>좋아요 한 사진</p>
+
 
           </div>
         )}
