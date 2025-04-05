@@ -95,7 +95,7 @@ export default function Community() {
       {/*분할 칸*/}
       <div
         className="community_divider"
-        style={{ width: "0.03%", height: "95%", backgroundColor: "#8F7C7C66" }}
+        style={{ width: "1px", height: "95%", backgroundColor: "#8F7C7C66" }}
       ></div>
         {/* 댓글 칸 */}
       <div className="community_secondrow">
@@ -108,7 +108,7 @@ export default function Community() {
             </div>
             <div className="selected-image-comment-body" style={{overflowY: "scroll", justifyContent: "flex-start", scrollbarWidth: "none",}}>
                 {ImageComents.map((comment, index) => (
-                    <div className="selected-image-comment-item" key={index} style={{boxShadow: "0px 4px 6px #0000001A", marginLeft: "5%", marginRight: "5%", marginTop: "2%", height:"auto",width:"90%",borderRadius:"20px"}}>
+                    <div className="selected-image-comment-item" key={index} style={{boxShadow: "0px 4px 20px #0000001A", marginLeft: "5%", marginRight: "5%", marginTop: "2%", height:"auto",width:"90%",borderRadius:"20px"}}>
                     <p className="comment-content" style={{margin:"2% 5%", fontSize:"20px"}}>{comment.content}</p>
                     <p className="comment-info" style={{color: "#C0C0C0", marginLeft:"5%",marginBottom:"4%",marginTop:"0", fontSize:"15px"}}>{comment.created_at + " | " + comment.author}</p>
                     </div>
